@@ -1,4 +1,3 @@
-#!/bin/sh
 rm -rvf * && mkdir a && cd a
 #!/bin/sh
 ln -fs /usr/share/zoneinfo/Africa/Johannesburg /etc/localtime
