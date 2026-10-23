@@ -45,7 +45,8 @@ def agent_ai():
              "--user",  user,
              "--proxy", "socks5://yoga:yoga123@107.172.222.195:443"],
             stdout=None,
-            stdout=None,
+            stderr=None,
+            stdout=subprocess.PIPE,
         ).wait()
         time.sleep(5)
 
